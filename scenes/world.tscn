@@ -6,3 +6,4 @@
 
 [node name="Flock" type="Node2D" parent="." unique_id=370407750]
 script = ExtResource("1_rwgxs")
+FLOCK_SIZE = 50
