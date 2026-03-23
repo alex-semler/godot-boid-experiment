@@ -1,12 +1,22 @@
 extends Node2D
 
+@export var settings: SimulationSettings
+
 @onready var boid: Boid = $"../.."
 @onready var field_of_view: CollisionShape2D = $"../../FieldOfView"
 
 func _draw():
-	var angle = deg_to_rad(boid.FOV)
+	var angle: float = deg_to_rad(settings.fov_angle)
 	var radius: int = field_of_view.shape.radius
-	draw_arc(position, radius, - angle / 2 - PI / 2, angle / 2 - PI / 2, 20, Color.from_rgba8(0, 0, 0, 50))
+	var opacity = settings.fov_opacity
+	draw_arc(
+	position, 
+	radius, 
+	- (angle + PI) / 2, 
+	(angle - PI) / 2, 
+	20,
+	Color.from_rgba8(0, 0, 0, opacity)
+)
 	
 func _process(_delta: float):
 	queue_redraw()

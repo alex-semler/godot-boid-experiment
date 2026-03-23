@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="SimulationSettings" format=3 uid="uid://jbyb2wlsyn1q"]
+
+[ext_resource type="Script" uid="uid://vb7ni6utx3m5" path="res://scripts/simulation_settings.gd" id="1_krfic"]
+
+[resource]
+script = ExtResource("1_krfic")
+flock_size = 25
+initial_speed = Vector2(245, 250)
+fov_angle = 245
+fov_opacity = 68
+metadata/_custom_type_script = "uid://vb7ni6utx3m5"

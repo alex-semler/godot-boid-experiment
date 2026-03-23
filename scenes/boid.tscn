@@ -3,6 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://do8vgci8nr6oy" path="res://assets/bird_2_black.png" id="1_n4whh"]
 [ext_resource type="Script" uid="uid://ciahc1jen1a2o" path="res://scripts/boid.gd" id="1_vrn0v"]
 [ext_resource type="Script" uid="uid://dscqxsa648mip" path="res://scripts/visualizer/fov.gd" id="3_5r8tn"]
+[ext_resource type="Resource" uid="uid://jbyb2wlsyn1q" path="res://settings.tres" id="4_0n3de"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rwgxs"]
 atlas = ExtResource("1_n4whh")
@@ -43,10 +44,7 @@ radius = 80.0
 
 [node name="Boid" type="Area2D" unique_id=1821972924]
 script = ExtResource("1_vrn0v")
-FOV = 260
-SEPARATION_WEIGHT = 0.807
-ALIGNMENT_WEIGHT = 0.458
-COHESION_WEIGHT = 0.349
+settings = ExtResource("4_0n3de")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=779736384]
 sprite_frames = SubResource("SpriteFrames_71j4m")
@@ -59,3 +57,4 @@ shape = SubResource("CircleShape2D_vrn0v")
 [node name="VisualizeFOV" type="Node2D" parent="FieldOfView" unique_id=626860490]
 z_index = -1
 script = ExtResource("3_5r8tn")
+settings = ExtResource("4_0n3de")
