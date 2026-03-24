@@ -4,10 +4,11 @@
 
 [resource]
 script = ExtResource("1_krfic")
-flock_size = 25
-initial_speed = Vector2(10, 20)
-fov_angle = 278
-separation_weight = 0.7
-cohesion_weight = 0.4
+flock_size = 40
+initial_speed = Vector2(100, 150)
+fov_angle = 270
+separation_weight = 0.8
+alignment_weight = 0.6
+cohesion_weight = 0.75
 fov_opacity = 0
 metadata/_custom_type_script = "uid://vb7ni6utx3m5"
