@@ -15,15 +15,16 @@ func _ready() -> void:
 	sprite.play("flying")
 	
 func _process(delta: float) -> void:
-	var combined_forces: Vector2 = get_combined_forces()
-	var speed = velocity.length()
-	
-	velocity = (velocity + combined_forces).normalized() * speed
+	var acceleration: Vector2 = get_combined_forces()
+	velocity += acceleration * delta
+	var speed: float = velocity.length()
+	var normalized_speed: float = clamp(speed, settings.speed_range.x, settings.speed_range.y)
+	var direction: Vector2 = velocity.normalized()
+	velocity = direction * normalized_speed
 	
 	position += (velocity * delta)
 	position.x = fposmod(position.x, viewport_size.x)
 	position.y = fposmod(position.y, viewport_size.y)
-	
 	rotation = velocity.angle() + PI/2
 	
 func get_combined_forces() -> Vector2:
@@ -38,7 +39,7 @@ func get_combined_forces() -> Vector2:
 	var alignment: Vector2 = alignment_force(n_velocities)
 	var cohesion: Vector2 = cohesion_force(n_positions)
 	
-	return separation + alignment + cohesion
+	return (separation + alignment + cohesion) * perception_radius
 	
 func get_neighbors() -> Array[Boid]:
 	var within_range: Array[Area2D] = get_overlapping_areas()
@@ -58,22 +59,22 @@ func separation_force(neighbor_positions: PackedVector2Array) -> Vector2:
 		var distance: float = global_position.distance_to(p) / perception_radius
 		var force_component: Vector2 = (p - global_position).normalized() / (distance * distance)
 		force -= force_component
-	return force.limit_length(settings.separation_weight * settings.max_force)
+	return steer_towards(force) * settings.separation_weight
 	
 func alignment_force(neighbor_velocities: PackedVector2Array) -> Vector2:
-	if neighbor_velocities.is_empty():
-		return Vector2.ZERO
-	var sum: Vector2 = Vector2.ZERO
-	for v: Vector2 in neighbor_velocities:
-		sum += v
-	return (sum / len(neighbor_velocities)).limit_length(settings.alignment_weight * settings.max_force)
+	var average_velocity: Vector2 = average_vectors(neighbor_velocities)
+	return steer_towards(average_velocity) * settings.alignment_weight
 	
 func cohesion_force(neighbor_positions: PackedVector2Array) -> Vector2:
-	if neighbor_positions.is_empty():
+	var center_of_mass: Vector2 = average_vectors(neighbor_positions)
+	return steer_towards(center_of_mass - global_position) * settings.cohesion_weight
+	
+func average_vectors(vectors: Array[Vector2]) -> Vector2:
+	if vectors.is_empty():
 		return Vector2.ZERO
-	var sum: Vector2 = Vector2.ZERO
-	for p: Vector2 in neighbor_positions:
-		sum += p
-	var average_position: Vector2 = sum / len(neighbor_positions)
-	return (average_position - global_position).limit_length(settings.cohesion_weight * settings.max_force)
+	var sum: Vector2 = vectors.reduce(func(acc, v): return acc + v, Vector2.ZERO)
+	return sum / vectors.size()
 		
+func steer_towards(target: Vector2) -> Vector2:
+	var steering_motion: Vector2 = target.normalized() * settings.speed_range.x - velocity
+	return steering_motion.limit_length(settings.max_force)

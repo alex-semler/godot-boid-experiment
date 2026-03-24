@@ -8,7 +8,7 @@ extends Node2D
 func _draw():
 	var angle: float = deg_to_rad(settings.fov_angle)
 	var radius: int = field_of_view.shape.radius
-	var opacity = settings.fov_opacity
+	var opacity: int = settings.fov_opacity
 	draw_arc(
 	position, 
 	radius, 

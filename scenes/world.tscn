@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://olqnp2ykox2u"]
 
-[ext_resource type="Script" uid="uid://bvleva7obujci" path="res://scenes/world.gd" id="1_4wyf3"]
+[ext_resource type="Script" uid="uid://bvleva7obujci" path="res://scripts/world.gd" id="1_4wyf3"]
 [ext_resource type="Script" uid="uid://cuwq20a4wri16" path="res://scripts/flock.gd" id="1_rwgxs"]
 [ext_resource type="Resource" uid="uid://jbyb2wlsyn1q" path="res://settings.tres" id="2_4wyf3"]
 

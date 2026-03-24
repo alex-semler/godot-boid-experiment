@@ -5,7 +5,8 @@ extends Resource
 @export var flock_size: int = 20
 
 @export_group("Boid Settings")
-@export var initial_speed: Vector2 = Vector2(100, 250)
+@export var initial_speed: Vector2 = Vector2(150, 200)
+@export var speed_range:   Vector2 = Vector2(100, 250)
 @export_range(0, 360) var fov_angle: int = 120
 @export_range(0.0, 1.0) var separation_weight: float = 0.5
 @export_range(0.0, 1.0) var alignment_weight: float = 0.5
