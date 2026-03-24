@@ -3,10 +3,43 @@
 [ext_resource type="Script" uid="uid://bvleva7obujci" path="res://scripts/world.gd" id="1_4wyf3"]
 [ext_resource type="Script" uid="uid://cuwq20a4wri16" path="res://scripts/flock.gd" id="1_rwgxs"]
 [ext_resource type="Resource" uid="uid://jbyb2wlsyn1q" path="res://settings.tres" id="2_4wyf3"]
+[ext_resource type="Shader" uid="uid://caynp8ep81e5s" path="res://shader/clouds.gdshader" id="3_k0juu"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_71j4m"]
+shader = ExtResource("3_k0juu")
+shader_parameter/speed = 0.010000000475
+
+[sub_resource type="Gradient" id="Gradient_4wyf3"]
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_k0juu"]
+frequency = 0.0043
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_71j4m"]
+width = 1080
+height = 720
+noise = SubResource("FastNoiseLite_k0juu")
+color_ramp = SubResource("Gradient_4wyf3")
+seamless = true
 
 [node name="World" type="Node2D" unique_id=814990889]
 script = ExtResource("1_4wyf3")
 settings = ExtResource("2_4wyf3")
+
+[node name="Background" type="Node2D" parent="." unique_id=848453908]
+
+[node name="Sky" type="ColorRect" parent="Background" unique_id=2037021100]
+offset_right = 1080.0
+offset_bottom = 720.0
+color = Color(0.4627451, 0.7764706, 0.80784315, 1)
+
+[node name="Clouds" type="TextureRect" parent="Background" unique_id=1844349789]
+modulate = Color(1, 1, 1, 0.72156864)
+material = SubResource("ShaderMaterial_71j4m")
+offset_right = 1080.0
+offset_bottom = 720.0
+texture = SubResource("NoiseTexture2D_71j4m")
+stretch_mode = 1
 
 [node name="Flock" type="Node2D" parent="." unique_id=370407750]
 script = ExtResource("1_rwgxs")
